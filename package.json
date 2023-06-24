@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "next lint --fix",
     "test": "jest --watch",
+    "ci:test": "jest --passWithNoTests",
     "format:all": "prettier --write .",
     "format:staged": "prettier --write $(git diff --staged --name-only --diff-filter d | xargs)"
   },

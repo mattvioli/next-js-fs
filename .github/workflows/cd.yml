@@ -7,7 +7,7 @@ on:
     branches:
       - "*"
 jobs:
-  Component-E2E-test:
+  CD/CI:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository code
@@ -19,7 +19,7 @@ jobs:
         run: yarn install
 
       - name: Run lint
-        id: build-typescript
+        id: linting
         run: yarn lint
 
       - name: Build Typescript
@@ -28,4 +28,4 @@ jobs:
 
       - name: Run tests
         id: run-tests
-        run: yarn test
+        run: yarn ci:test
