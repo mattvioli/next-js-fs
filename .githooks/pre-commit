@@ -1,7 +1,5 @@
 #!/bin/sh
 
-print 'checking pre-commit'
-
 if git rev-parse --verify HEAD >/dev/null 2>&1
 then
 	against=HEAD
@@ -40,11 +38,7 @@ EOF
 	exit 1
 fi
 
-print "linting"
-
 exec yarn lint
-
-print 'running tests'
 
 exec yarn test
 
