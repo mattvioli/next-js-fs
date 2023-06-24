@@ -1,0 +1,31 @@
+name: CD
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - "*"
+jobs:
+  Component-E2E-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        id: Checkout
+        uses: actions/checkout@v3
+
+      - name: Install dependencies
+        id: install-dependencies
+        run: yarn install
+
+      - name: Run lint
+        id: build-typescript
+        run: yarn lint
+
+      - name: Build Typescript
+        id: build-typescript
+        run: yarn build
+
+      - name: Run tests
+        id: run-tests
+        run: yarn test
