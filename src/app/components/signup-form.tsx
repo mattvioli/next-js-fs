@@ -1,3 +1,4 @@
+"use-client";
 import {
   Input,
   Button,
@@ -38,7 +39,7 @@ export function SignUp() {
       <CardHeader>
         <Text>No account? Sign up below.</Text>
       </CardHeader>
-      <CardBody align="center">
+      <CardBody>
         <form onSubmit={handleSubmit(onSubmit)}>
           <FormControl isInvalid={!!errors.email} isRequired>
             <FormLabel>Email address</FormLabel>
@@ -53,7 +54,7 @@ export function SignUp() {
             />
             <FormErrorMessage>Email is required.</FormErrorMessage>
           </FormControl>
-          <FormControl isInvalid={errors.password} isRequired>
+          <FormControl isInvalid={Boolean(errors.password)} isRequired>
             <FormLabel>Password</FormLabel>
             <Input
               id="password"
