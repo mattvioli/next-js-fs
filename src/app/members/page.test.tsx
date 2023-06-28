@@ -3,6 +3,20 @@ import MembersSection from "./page";
 import { MockedProvider } from "@apollo/client/testing";
 import { GET_POKEMON } from "./../../queries/pokemon";
 
+jest.mock("next-auth/react", () => {
+  const originalModule = jest.requireActual("next-auth/react");
+  const mockSession = {
+    expires: new Date(Date.now() + 2 * 86400).toISOString(),
+    user: { email: "ash@ketchem.com" }
+  };
+  return {
+    __esModule: true,
+    ...originalModule,
+    useSession: jest.fn(() => {
+      return { data: mockSession, status: "authenticated" };
+    })
+  };
+});
 const mocks = [
   {
     request: {
