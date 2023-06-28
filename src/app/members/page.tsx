@@ -13,21 +13,10 @@ import {
   Td,
   TableCaption
 } from "@chakra-ui/react";
-import { useQuery, gql } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import { useSession } from "next-auth/react";
 import { SignIn } from "../components/signin-btn";
-
-export const GET_POKEMON = gql`
-  {
-    gen1_species: pokemon_v2_pokemonspecies(
-      where: { pokemon_v2_generation: { name: { _eq: "generation-i" } } }
-      order_by: { id: asc }
-    ) {
-      name
-      id
-    }
-  }
-`;
+import { GET_POKEMON } from "./../../queries/pokemon";
 
 export default function MembersSection() {
   const { status } = useSession();

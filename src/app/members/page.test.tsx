@@ -1,6 +1,7 @@
 import { render, screen } from "@testing-library/react";
-import MembersSection, { GET_POKEMON } from "./page";
+import MembersSection from "./page";
 import { MockedProvider } from "@apollo/client/testing";
+import { GET_POKEMON } from "./../../queries/pokemon";
 
 const mocks = [
   {
