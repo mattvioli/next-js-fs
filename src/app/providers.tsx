@@ -4,6 +4,13 @@ import { SessionProvider } from "next-auth/react";
 import { Session } from "next-auth";
 import { CacheProvider } from "@chakra-ui/next-js";
 import { ChakraProvider } from "@chakra-ui/react";
+import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
+
+const client = new ApolloClient({
+  uri: "https://beta.pokeapi.co/graphql/v1beta",
+
+  cache: new InMemoryCache()
+});
 
 export function Providers({
   children,
@@ -14,9 +21,11 @@ export function Providers({
 }) {
   return (
     <SessionProvider session={session}>
-      <CacheProvider>
-        <ChakraProvider>{children}</ChakraProvider>
-      </CacheProvider>
+      <ApolloProvider client={client}>
+        <CacheProvider>
+          <ChakraProvider>{children}</ChakraProvider>
+        </CacheProvider>
+      </ApolloProvider>
     </SessionProvider>
   );
 }
