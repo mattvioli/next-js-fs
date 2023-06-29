@@ -19,8 +19,10 @@ import { SignIn } from "../components/signin-btn";
 import { GET_POKEMON } from "./../../queries/pokemon";
 
 export default function MembersSection() {
-  const { status } = useSession();
+  const { status, data: sessions } = useSession();
   const { loading, data: pokemons } = useQuery(GET_POKEMON);
+  console.log({ sessions });
+
   if (status === "loading") {
     return (
       <main className={styles.main}>

@@ -6,7 +6,8 @@ import prisma from "./prisma";
 
 export const authOptions: NextAuthOptions = {
   session: {
-    strategy: "jwt"
+    strategy: "jwt",
+    maxAge: 30 * 24 * 60 * 60
   },
 
   adapter: PrismaAdapter(prisma),
@@ -25,13 +26,38 @@ export const authOptions: NextAuthOptions = {
         const { email, password } = credentials;
 
         const user = await prisma.user.findUnique({ where: { email } });
+        console.log({ user });
 
         if (!user || (user?.password && !compare(password, user.password))) {
           return null;
         }
-
-        return { id: user.id, email: user.email };
+        return {
+          id: user.id,
+          email: user.email,
+          jobTitle: user?.jobTitle,
+          username: user?.username
+        };
       }
     })
-  ]
+  ],
+  callbacks: {
+    jwt: ({ token, user }) => {
+      if (user) {
+        token.id = user.id;
+        token.jobTitle = user.jobTitle;
+        token.username = user.username;
+        token.email = user.email;
+      }
+      return token;
+    },
+    session: ({ session, token }) => {
+      if (token) {
+        session.user.id = token.id;
+        session.user.jobTitle = token.jobTitle;
+        session.user.username = token.username;
+        session.user.email = token.email;
+      }
+      return session;
+    }
+  }
 };
