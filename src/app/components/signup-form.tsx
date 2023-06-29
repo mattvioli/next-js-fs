@@ -41,7 +41,7 @@ export function SignUp() {
       </CardHeader>
       <CardBody>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <FormControl isInvalid={!!errors.email} isRequired>
+          <FormControl isInvalid={Boolean(errors.email)} isRequired>
             <FormLabel>Email address</FormLabel>
             <Input
               id="email"
