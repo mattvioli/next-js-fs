@@ -27,16 +27,17 @@ export const authOptions: NextAuthOptions = {
 
         const user = await prisma.user.findUnique({ where: { email } });
         if (!user || !user.password) return null;
-        return await compare(password, user.password).then((res) => {
-          if (res) {
-            return {
-              id: user.id,
-              email: user.email,
-              jobTitle: user?.jobTitle,
-              username: user?.username
-            };
-          }
-        });
+        const isCorrectPassword = await compare(password, user.password);
+
+        if (isCorrectPassword) {
+          return {
+            id: user.id,
+            email: user.email,
+            jobTitle: user?.jobTitle,
+            username: user?.username
+          };
+        }
+        return null;
       }
     })
   ],
