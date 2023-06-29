@@ -11,7 +11,8 @@ import {
   FormErrorMessage
 } from "@chakra-ui/react";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
+
 type Inputs = {
   email: string;
   password: string;
@@ -23,6 +24,7 @@ export function SignUp() {
     handleSubmit,
     formState: { errors, isSubmitting }
   } = useForm<Inputs>();
+  const router = useRouter();
 
   const onSubmit: SubmitHandler<Inputs> = async (inputs) => {
     const response = await fetch("/api/register", {
@@ -33,7 +35,7 @@ export function SignUp() {
       }
     });
     if (response.status === 200) {
-      redirect("/members");
+      router.push("/members");
     }
   };
 
