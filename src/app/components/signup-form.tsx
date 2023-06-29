@@ -11,7 +11,7 @@ import {
   FormErrorMessage
 } from "@chakra-ui/react";
 import { useForm, SubmitHandler } from "react-hook-form";
-
+import { redirect } from "next/navigation";
 type Inputs = {
   email: string;
   password: string;
@@ -25,13 +25,16 @@ export function SignUp() {
   } = useForm<Inputs>();
 
   const onSubmit: SubmitHandler<Inputs> = async (inputs) => {
-    await fetch("/api/register", {
+    const response = await fetch("/api/register", {
       method: "POST",
       body: JSON.stringify(inputs),
       headers: {
         "Content-Type": "application/json"
       }
     });
+    if (response.status === 200) {
+      redirect("/members");
+    }
   };
 
   return (
